@@ -18,9 +18,9 @@ jobs:
 
         with:
 
-          find: "blasters"
+          find: "shenron"
 
-          replace: "plugins"
+          replace: "userbot"
 
       - name: Create Pull Request
 
@@ -28,7 +28,7 @@ jobs:
 
         with:
 
-          commit_message: 'Stuffs'
+          commit_message: 'Things'
 
           commit_options: '--no-verify'
 

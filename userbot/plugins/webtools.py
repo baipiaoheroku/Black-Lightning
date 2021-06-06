@@ -1,30 +1,96 @@
-# @FridayoT
+#Made by @Midhun_xD real owner @Midhun_xD 
+#ported To javes 3.0 @ShivaM_PateL
+#nothing BY Me @CRiMiNaL786
 
 import requests
+import os 
+from re import match
+CHROME_DRIVER = os.environ.get("CHROME_DRIVER", None)
+GOOGLE_CHROME_BIN = os.environ.get("GOOGLE_CHROME_BIN", None)
+TEMP_DOWNLOAD_DIRECTORY = os.environ.get("TMP_DOWNLOAD_DIRECTORY","./downloads")
+import aiofiles
+import asyncio
 from iplookup import iplookup
 from selenium import webdriver
 from youtube_search import YoutubeSearch
+from selenium import webdriver
+from webdriver_manager.chrome import ChromeDriverManager
 
+from userbot import CMD_HELP
 from userbot.utils import lightning_cmd, edit_or_reply, sudo_cmd
+from userbot.Config import Var
+from userbot.thunderconfig import Config
+from var import Var
+from userbot.utils import lightning_cmd
+
+
+
 
 
 @borg.on(lightning_cmd(pattern="wshot ?(.*)"))
 @borg.on(sudo_cmd(pattern="wshot ?(.*)", allow_sudo=True))
-async def _(event):
-    if event.fwd_from:
+async def wshot(message):
+    king= message.text
+    amaan=king[7:]
+
+    link_match = match(r"\bhttps?://.*\.\S+", amaan)
+    if not link_match:
+        await message.edit("`I need a valid link to take screenshots from.`")
         return
-    urlissed = event.pattern_match.group(1)
-    sedlyfstarky = await edit_or_reply(event, "Capturing Webshot, Stay Tuned.")
-    driver = webdriver.Chrome()
-    driver.get(urlissed)
-    driver.get_screenshot_as_file("Webshot-@fridayot.png")
-    imgpath = "Webshot-@fridayot.png"
-    await sedlyfstarky.edit("Completed. Uploading in Telegram..")
-    await borg.send_file(
-        event.chat_id,
-        file=imgpath,
-        caption=f"**WEBSHOT OF** `{urlissed}` \n**Powered By @Fridayot**",
+    link = link_match.group()
+    await message.edit("`Processing ...`")
+    chrome_options = webdriver.ChromeOptions()
+    chrome_options.binary_location = GOOGLE_CHROME_BIN
+    chrome_options.add_argument("--ignore-certificate-errors")
+    chrome_options.add_argument("--test-type")
+    chrome_options.add_argument("--headless")
+    chrome_options.add_argument("--no-sandbox")
+    chrome_options.add_argument("--disable-dev-shm-usage")
+    chrome_options.add_argument("--no-sandbox")
+    chrome_options.add_argument("--disable-gpu")
+    #driver = webdriver.Chrome(chrome_options=chrome_options)
+    driver = webdriver.Chrome((ChromeDriverManager().install()),chrome_options=chrome_options)
+    driver.get(link)
+    height = driver.execute_script(
+        "return Math.max(document.body.scrollHeight, document.body.offsetHeight, "
+        "document.documentElement.clientHeight, document.documentElement.scrollHeight, "
+        "document.documentElement.offsetHeight);"
     )
+    width = driver.execute_script(
+        "return Math.max(document.body.scrollWidth, document.body.offsetWidth, "
+        "document.documentElement.clientWidth, document.documentElement.scrollWidth, "
+        "document.documentElement.offsetWidth);"
+    )
+    driver.set_window_size(width + 125, height + 125)
+    wait_for = height / 1000
+    await message.edit(
+        f"`Generating screenshot of the page...`"
+        f"\n`Height of page = {height}px`"
+        f"\n`Width of page = {width}px`"
+        f"\n`Waiting ({int(wait_for)}s) for the page to load.`"
+    )
+    await asyncio.sleep(int(wait_for))
+    im_png = driver.get_screenshot_as_png()
+    driver.close()
+    message_id = message.message.id
+    reply = await message.get_reply_message()
+    if message.reply_to_msg_id:
+        message_id = message.reply_to_msg_id
+    file_path = os.path.join(TEMP_DOWNLOAD_DIRECTORY, "wshot.png")
+    async with aiofiles.open(file_path, "wb") as out_file:
+        await out_file.write(im_png)
+    await asyncio.gather(
+        message.delete(),
+        message.client.send_file(
+            message.chat_id,
+            file_path,
+            caption=link,
+            force_document=False,
+            reply_to=message_id,
+        ),
+    )
+    os.remove(file_path)
+    driver.quit()
 
 
 @borg.on(lightning_cmd(pattern="lp ?(.*)"))
@@ -155,3 +221,5 @@ async def _(event):
         await stark_result.edit(noob, parse_mode="HTML")
     except:
         await event.edit("Some Thing Went Wrong.")
+
+CMD_HELP.update({"wshot":"\n\n.wshot link "})

@@ -8,12 +8,22 @@ ENV = bool(os.environ.get("ENV", False))
 class Var(object):
     APP_ID = int(os.environ.get("APP_ID", 6))
     # 6 is a placeholder
+    LIGHTNING_PRO = os.environ.get("LIGHTNING_PRO", None)
+    if not LIGHTNING_PRO:
+        LIGHTNING_PRO = "YES"
+    else:
+        LIGHTNING_PRO = LIGHTNING_PRO
+
     API_HASH = os.environ.get("API_HASH", "eb06d4abfb49dc3eeb1aeb98ae0f581e")
     STRING_SESSION = os.environ.get("STRING_SESSION", None)
     DB_URI = os.environ.get("DATABASE_URL", None)
     TEMP_DOWNLOAD_DIRECTORY = os.environ.get("TEMP_DOWNLOAD_DIRECTORY", None)
     BIO_MSG = os.environ.get("BIO_MSG", None)
+    ALIVE_MESSAGE = os.environ.get("ALIVE_MESSAGE", None)
+
     TMP_DOWNLOAD_DIRECTORY = os.environ.get("TMP_DOWNLOAD_DIRECTORY", None)
+    CHROME_DRIVER = os.environ.get("CHROME_DRIVER", None)
+    GOOGLE_CHROME_BIN = os.environ.get("GOOGLE_CHROME_BIN", None)
     LOGGER = True
     GITHUB_ACCESS_TOKEN = os.environ.get("GITHUB_ACCESS_TOKEN", None)
     GIT_REPO_NAME = os.environ.get("GIT_REPO_NAME", None)
@@ -34,7 +44,9 @@ class Var(object):
     # custom vars
     CUSTOM_ALIVE = os.environ.get("CUSTOM_ALIVE", None)
     CUSTOM_ALIVE_EMOJI = os.environ.get("CUSTOM_ALIVE_EMOJI", None)
-    SUDO_HNDLR = os.environ.get("SUDO_HNDLR", "\.")
+    CHROME_DRIVER = os.environ.get("CHROME_DRIVER", None)
+    GOOGLE_CHROME_BIN = os.environ.get("GOOGLE_CHROME_BIN", None)
+    SUDO_HNDLR = os.environ.get("SUDO_HNDLR", r"\!")
     OCR_SPACE_API_KEY = os.environ.get("OCR_SPACE_API_KEY", None)
     ALIVE_PHOTTO = os.environ.get("ALIVE_PHOTTO", None)
     ALIVE_MSG = os.environ.get("ALIVE_MSG", None)
@@ -136,7 +148,11 @@ class Var(object):
 
 
 class Development(Var):
+
     LOGGER = True
+    CHROME_DRIVER = os.environ.get("CHROME_DRIVER", None)
+    GOOGLE_CHROME_BIN = os.environ.get("GOOGLE_CHROME_BIN", None)
+
     # Here for later purposes
 
 
@@ -144,6 +160,8 @@ if ENV:
 
     class Config(object):
         LOGGER = True
+        CHROME_DRIVER = os.environ.get("CHROME_DRIVER", None)
+        GOOGLE_CHROME_BIN = os.environ.get("GOOGLE_CHROME_BIN", None)
         # Get this value from my.telegram.org! Please do not steal
         LOCATION = os.environ.get("LOCATION", None)
         OPEN_WEATHER_MAP_APPID = os.environ.get("OPEN_WEATHER_MAP_APPID", None)
@@ -161,6 +179,8 @@ if ENV:
         TMP_DOWNLOAD_DIRECTORY = os.environ.get(
             "TMP_DOWNLOAD_DIRECTORY", "./DOWNLOADS/"
         )
+        CHROME_DRIVER = os.environ.get("CHROME_DRIVER", None)
+        GOOGLE_CHROME_BIN = os.environ.get("GOOGLE_CHROME_BIN", None)
         # This is required for the speech to text module. Get your USERNAME
         # from
         # https://console.bluemix.net/docs/services/speech-to-text/getting-started.html
@@ -185,6 +205,9 @@ if ENV:
         #
         NO_SONGS = bool(os.environ.get("NO_SONGS", False))
         #
+        CHROME_DRIVER = os.environ.get("CHROME_DRIVER", None)
+        GOOGLE_CHROME_BIN = os.environ.get("GOOGLE_CHROME_BIN", "/usr/bin/google-chrome")
+
         # DO NOT EDIT BELOW THIS LINE IF YOU DO NOT KNOW WHAT YOU ARE DOING
         # TG API limit. A message can have maximum 4096 characters!
         MAX_MESSAGE_SIZE_LIMIT = 4095
@@ -274,4 +297,8 @@ else:
 
     class Config(object):
         DB_URI = None
+        CHROME_DRIVER = os.environ.get("CHROME_DRIVER", None)
+        GOOGLE_CHROME_BIN = os.environ.get("GOOGLE_CHROME_BIN", None)
+
+
         # Add your extra vars if any here

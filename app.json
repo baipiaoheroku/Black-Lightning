@@ -48,7 +48,12 @@
     "description": "Used to invoke commands, leave as it for default",
     "value": ".",
     "required": false
-   },  
+   },
+    "LIGHTNING_ALV_IMG": {
+    "description": "To add another Alive pic, Leave blank for default. ",
+    "value": "",
+    "required": false
+   }, 
     "SUDO_HNDLR": {
     "description": "Used to invoke sudo commands, leave blank for default",
     "value": "",
@@ -84,7 +89,7 @@
    },  
     "ALIVE_MSG": {
       "description": "Set Custom awake Message When entering .awake command.",
-      "value": "",
+      "value": "Heyy There `Lightning Master` Am Alive till you turn me off manually or my Dynos get over. ",
       "required": false
     },
     "CHROME_BIN": {
@@ -128,12 +133,12 @@
     "required": true
    },
    "ALIVE_NAME": {
-    "description": "Your Telegram Username. ",
+    "description": "Put Your Name you can use designer fonts. ",
     "value": "",
     "required": false
    },
    "TG_GRUP": {
-    "description": "Telegram Grup Name Starts With @ like, @lightningsupport, If No Name Leave It Default. Required For Alive ",
+    "description": "Telegram Grup Name Starts With @ like, @lightning_support_group, If No Name Leave It Default. Required For Alive ",
     "value": "Not Yet😁😁",
     "required": true
    }, 
@@ -158,7 +163,7 @@
     "required": false
    },
    "ALIVE_PIC": {
-    "description": "telegra.ph link to theimage you want as alive pic, leave blank for sticker",
+    "description": "telegra.ph link to theimage you want as pic when you put .awake, leave blank for Default",
     "value": "",
     "required": false
    },
@@ -179,5 +184,4 @@
     "version": "12"
    }
   }]
- }
- 
+}

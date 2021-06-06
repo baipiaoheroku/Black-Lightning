@@ -3,7 +3,7 @@
 # Licensed under the Raphielscape Public License, Version 1.b (the "License");
 # you may not use this file except in compliance with the License.
 #
-#
+# some modules maded by LEGENDX22 and PROBOYX
 
 """ Userbot module for having some fun with people. """
 
@@ -907,12 +907,18 @@ async def vapor(vpr):
 
 
 @register(outgoing=True, pattern="^.repo$")
-async def source(e):
-    if not e.text[0].isalpha() and e.text[0] not in ("/", "#", "@", "!"):
-        await e.edit(
-            f"**Hello , {DEFAULTUSER} Is Givin A Opportunity To Use Lighting [Lightningt](https://github.com/KeinShin/Black-Lightning) !\n Try Now😉"
-        )
-
+async def repo(event):
+    if event.fwd_from:
+        return
+    try:
+      LEGENDX = Var.TG_BOT_USER_NAME_BF_HER #LEGENDX22 LEGENDXOP
+      if event.reply_to_msg_id:
+          await event.get_reply_message()
+      response = await bot.inline_query(LEGENDX, "repo")
+      await response[0].click(event.chat_id)
+      await event.delete()
+    except:
+       pass
 
 @register(outgoing=True, pattern="^.str(?: |$)(.*)")
 async def stretch(stret):

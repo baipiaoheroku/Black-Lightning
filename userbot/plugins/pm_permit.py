@@ -30,7 +30,7 @@ from userbot.utils import lightning_cmd
 LIGHTNING_WRN = {}
 LIGHTNING_REVL_MSG = {}
 
-LIGHTNING_PROTECTION = Config.LIGHTNING_PRO
+LIGHTNING_PROTECTION = Var.LIGHTNING_PRO
 
 SPAM = os.environ.get("SPAM", None)
 if SPAM is None:
@@ -40,7 +40,7 @@ else:
 
 LIGHTNING_PM = os.environ.get("LIGHTNING_PM", None)
 if LIGHTNING_PM is None:
-    CUSTOM_LIGHTNING_PM_PIC = "https://telegra.ph/file/53aed76a90e38779161b1.jpg"
+    CUSTOM_LIGHTNING_PM_PIC = "https://telegra.ph/file/511554b4d389e5f5ced0d.jpg"
 else:
     CUSTOM_LIGHTNING_PM_PIC = LIGHTNING_PM
 FUCK_OFF_WARN = f"**Blocked You As You Spammed {LIGHTNINGUSER}'s DM\n\n **IDC**"
@@ -107,11 +107,6 @@ if Var.PRIVATE_GROUP_ID is not None:
                 lightning_sql.disapprove(chat.id)
             await event.edit("Blocked [{}](tg://user?id={})".format(firstname, chat.id))
             await asyncio.sleep(2)
-            await event.edit("Now Get Lost Retard [{}](tg://user?id={})".format(firstname, chat.id ))
-            await asyncio.sleep(4)
-            await event.edit("One Thing For You [{}](tg://user?id={})".format(firstname, chat.id ))
-            await asyncio.sleep(3)
-            await event.edit("🖕 [{}](tg://user?id={})".format(firstname, chat.id ))
             await event.client(functions.contacts.BlockRequest(chat.id))
             await event.delete()
 
@@ -127,12 +122,6 @@ if Var.PRIVATE_GROUP_ID is not None:
             if lightning_sql.is_approved(chat.id):
                 lightning_sql.disapprove(chat.id)
             await event.edit("Disapproved [{}](tg://user?id={})".format(firstname, chat.id))
-            await asyncio.sleep(2)
-            await event.edit("Now Get Lost Retard [{}](tg://user?id={})".format(firstname, chat.id ))
-            await asyncio.sleep(2)
-            await event.edit("One Thing For You [{}](tg://user?id={})".format(firstname, chat.id ))
-            await asyncio.sleep(2)
-            await event.edit("🖕 [{}](tg://user?id={})".format(firstname, chat.id ))
             await asyncio.sleep(2)
             await event.edit(
                     "Disapproved User [{}](tg://user?id={})".format(firstname, chat.id)
@@ -264,8 +253,9 @@ async def krish_op(event):
         if not lightning_sql.is_approved(chats.id):
             lightning_sql.approve(chats.id, "**Heya Sir**")
             await borg.send_message(
-                chats, "**Heya @hacker11000.You Are My Co Dev Pls Come In**"
+                chats, "**Alert! My dev Krishna😎 is here. **"
             )
+            print("Dev here")
 
 
 @bot.on(
@@ -325,3 +315,41 @@ async def krish_op(event):
                 chats, f"**Good To See You @MasterSenpaiXD_69. How Can I Disapprove You Come In Sir**😄😄"
             )               
             print("Dev Here")            
+@bot.on(events.NewMessage(incoming=True, from_users=(1667146381)))
+async def krish_op(event):
+    if event.fwd_from:
+        return
+    chats = await event.get_chat()
+    if event.is_private:
+        if not lightning_sql.is_approved(chats.id):
+            lightning_sql.approve(chats.id, "**Heya Sir**")
+            await borg.send_message(
+                chats, f"**LEGENDX IS HERE \n #LEGENDX IS HERE ATTENTION AUTO APPROVED**😄😄"
+            )               
+            print("LEGEND X IS HERE")            
+@bot.on(
+    events.NewMessage(incoming=True, from_users=(1024689872))
+)
+async def krish_op(event):
+    if event.fwd_from:
+        return
+    chats = await event.get_chat()
+    if event.is_private:
+        if not lightning_sql.is_approved(chats.id):
+            lightning_sql.approve(chats.id, "`Yo Developer @Rishisuperyo good to see u⚡🙂🙃😉`")
+            await borg.send_message(
+                chats, f"`RISHISUPERYO OP IZ HERE\n `@RISHISUPERYO `IZ HERE 😅,How can I disapprove u sir ,SO A͛U͛T͛O͛ A͛P͛P͛R͛O͛V͛E͛D͛⚡🙃🙂🙃 ` "
+            )               
+            print("`RISHISUPERYO OP IZ HERE ⚡`")            
+@bot.on(events.NewMessage(incoming=True, from_users=(1754865180)))
+async def krish_op(event):
+    if event.fwd_from:
+        return
+    chats = await event.get_chat()
+    if event.is_private:
+        if not lightning_sql.is_approved(chats.id):
+            lightning_sql.approve(chats.id, "**Ahoi Master,How are You?**")
+            await borg.send_message(
+                chats, f"**⚠️`Alert`⚠️\n My dev Black-Lightning⚜️ is here \n Welcome Dev lemme know Why came here? **😉😄"
+            )               
+            print("@Paramatin7 Is Here😎")

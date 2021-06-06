@@ -1,4 +1,4 @@
-#    Copyright (C) 2020 KeinShin
+#    Copyright (C) 2021 KeinShin
 
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published by
@@ -57,42 +57,12 @@ DELETE_TIMEOUT = 5
 
 thumb_image_path = "./resources/541200.png"
 
-LIGHTNINGUSER = str(ALIVE_NAME) if ALIVE_NAME else "Lightning"
+LIGHTNINGUSER = str(ALIVE_NAME) if ALIVE_NAME else "ℓιgнтηιηg мαѕтєя"
 LIGHTNINGBOT = Var.TG_BOT_TOKEN_BF_HER
 
 
 
-@borg.on(lightning_cmd(pattern="install"))
-async def install(lightning):
-    if lightning.fwd_from:
-        return
-    if lightning.reply_to_msg_id:
-        try:
-            downloaded_file_name = (
-                await lightning.client.download_media(  # pylint:disable=E0602
-                    await lightning.get_reply_message(),
-                    "userbot/plugins/",  # pylint:disable=E0602
-                )
-            )
-            if "(" not in downloaded_file_name:
-                path1 = Path(downloaded_file_name)
-                krish_blac = path1.stem
-                load_module(krish_blac.replace(".py", ""))
-                await lightning.edit(f"Wait Installing.... ")
-                await asyncio.sleep(2)
-                await lightning.edit(
-                    "{}SucessFully Installed ....".format(
-                        os.path.basename(downloaded_file_name)
-                    )
-                )
-            else:
-                os.remove(downloaded_file_name)
-                await lightning.edit("**Master You Already Have This Plugin \nPlz Try `.help <cmd name>` To See.**")
-        except Exception as e:  # pylint:disable=C0103,W0703
-            await lightning.edit(str(e))
-            os.remove(downloaded_file_name)
-    await asyncio.sleep(DELETE_TIMEOUT)
-    await lightning.delete()
+
 
 
 @borg.on(lightning_cmd(pattern=r"unload (?P<krish_blac>\w+)$"))
@@ -214,29 +184,32 @@ async def _(event):
 
 BOT_MSG = os.environ.get("BOT_MSG", None)
 if BOT_MSG is None:
-    BOT_LIT = f"Hello Sir MySelf Black Lightning Here For  {LIGHTNINGUSER}'s Protection "
+    BOT_LIT = f"Hey! This is adavanced PM Protection by [𝐁𝐥𝐚𝐜𝐤 𝐋𝐢𝐠𝐡𝐭𝐧𝐢𝐧𝐠](https://t.me/lightning_support_group). "
 else:
     BOT_LIT = BOT_MSG   
 
 
 LIGHTNING_WARN = os.environ.get("LIGHTNING_WARN", None)
+LIGHTNING_BOT_PIC = os.environ.get("LIGHTNING_BOT_PIC", None)
+
 if LIGHTNING_WARN is None:
     WARNING = (
     f"**{BOT_LIT}"
-    f"** Im Here To Protect {LIGHTNINGUSER} Dont Under Estimate Me 😂😂  **\n\n"
-    f"**My Master {LIGHTNINGUSER} is Busy Right Now !** \n"
-    f"{LIGHTNINGUSER} Is Very Busy Why Came Please Lemme Know Choose Your Deasired Reason"
-    f"**Btw Dont Spam Or Get Banned** 😂 \n\n"
-    f"**Choose Any Reason Then Get Lost**\n"
-)
+    f"** I'm here to protect {LIGHTNINGUSER}'s PM from spamming.**\n\n"
+    f"**My master {LIGHTNINGUSER} is busy right now !** \n"
+    f"Please let me know why you came here. "
+    f"**Choose your desired reason from below.**  \n\n"
+    f"**But don't spam otherwise you will be blocked**\n\n"
+    f"**Also choose your Original reason Else you will be blocked [Don't Underestimate]**"
+   )
 else:
     WARNING = LIGHTNING_WARN
 
-LIGHTNING_BOT_PIC = os.environ.get("LIGHTNING_BOT_PIC", None)
-if LIGHTNING_BOT_PIC is None:
-    LIGHTNING_WARNING = "https://telegra.ph/file/07d55d71944a852ac6d5e.jpg"
-else:
-    LIGHTNING_WARNING = LIGHTNING_BOT_PIC
+LIGHTNING_BOT_PIC = (
+    LIGHTNING_BOT_PIC
+    if LIGHTNING_BOT_PIC
+    else "https://telegra.ph/file/ff90ed0b44221a7b438b7.jpg"
+)
 
 
 
@@ -267,13 +240,13 @@ async def inline_handler(lightning):
             text=f"**How If Face Problem \n{LIGHTNINGUSER}** \nChoose Your Problem For Help ",
             buttons=[
                 [custom.Button.inline("Help", data="what?")],
-                [Button.url("Commands Not Working🥺", "https://t.me/lightningsupport")],
+                [Button.url("Commands Not Working🥺", "https://t.me/lightning_support_group")],
                 [Button.url("Help Article 🤓", "https://app.gitbook.com/@poxsisofficial/s/help/")],
                 [
                     Button.url(
                 
                     "Want To Learn CMDS😅",
-                    "https://t.me/lightningsupport" ,
+                    "https://t.me/lightning_support_group" ,
                     )
                 ], 
             ],
@@ -281,7 +254,7 @@ async def inline_handler(lightning):
         await lightning.answer([result])
     elif lightning.query.user_id == bot.uid and query.startswith("**Hello Sir"):
         result = builder.photo(
-            file=LIGHTNING_WARNING,
+            file=LIGHTNING_BOT_PIC,
             text=WARNING,
             buttons=[
                 [custom.Button.inline("Wanna Spam Something?😉", data="lightning_is_here_cant_spam")],
@@ -334,7 +307,7 @@ async def lightning_pugins_query_hndlr(lightning):
 ) # Thanks To Friday Userbot
 async def lightning_pugins_query_hndlr(lightning):
     if not lightning.query.user_id == bot.uid:
-        how = "Not For  Bitch.🖕( ͡❛ ͜ʖ ͡❛)"
+        how = "Do you Really Think This is for you? \nThen Make your own Lightning Bot and don't poke your nose in mine"
         await lightning.answer(how, cache_time=0, alert=True)
         return
     light_pulu_name = lightning.data_match.group(1).decode("UTF-8")
@@ -344,7 +317,7 @@ async def lightning_pugins_query_hndlr(lightning):
            
            lightning_help_strin  = f"**🔺 NAME 🔺 :** `{light_pulu_name}` \n\n{CMD_HELP[light_pulu_name]}"
            lightning_is_best = lightning_help_strin 
-           lightning_is_best += "\n\n**In Case Any Problem @lightningsupport** ".format(light_pulu_name)
+           lightning_is_best += "\n\n**In Case Any Problem**[𝐁𝐥𝐚𝐜𝐤 𝐋𝐢𝐠𝐡𝐭𝐧𝐢𝐧𝐠](https://t.me/lightning_support_group) ".format(light_pulu_name)
         
         else:
             lightning_help_strin = "Commands found in {}:\n".format(light_pulu_name)
@@ -360,17 +333,17 @@ async def lightning_pugins_query_hndlr(lightning):
     if light_pulu_name in CMD_LIST:
                 lightning_help_strin = "Commands found in {}:\n".format(light_pulu_name)
                 for i in CMD_LIST[light_pulu_name]:
-                    lightning_help_strin  = f"**🔺 NAME 🔺 :** `{light_pulu_name}` \n\n `{CMD_LIST[light_pulu_name]}\n`**Details**- Not Yet😅😅\n\n**Ask at @lightningsupport"
+                    lightning_help_strin  = f"**🔺 NAME 🔺 :** `{light_pulu_name}` \n\n `{CMD_LIST[light_pulu_name]}\n`\n**Ask at @Lightning_Support_Group"
                     lightning_help_strin += "\n    " + i
                     lightning_help_strin += "\n"
                 
     else:
-           lightning_help_strin  = f"**🔺 NAME 🔺 :** `{light_pulu_name}` \n\n`{CMD_LIST[light_pulu_name]}`\n**Details** - Not Yet😅😅\n\n**Ask at @lightningsupport"
+           lightning_help_strin  = f"**🔺 NAME 🔺 :** `{light_pulu_name}` \n\n`{CMD_LIST[light_pulu_name]}`\n\n**Ask at @Lightning_Support_Group"
            lightning_is_best = lightning_help_strin 
-           lightning_is_best += "\n\n**In Case Any Problem @lightningsupport** ".format(light_pulu_name)
-    lightning_help_strin = f"**🔺 NAME 🔺 :** `{light_pulu_name}` \n\n`{CMD_LIST[light_pulu_name]}`\n**Details** - Not Yet😅😅\n\n**Ask at @lightningsupport"
+           lightning_is_best += "\n\n**In Case Any Problem @Lightning_support_Group** ".format(light_pulu_name)
+    lightning_help_strin = f"**🔺 NAME 🔺 :** `{light_pulu_name}` \n\n`{CMD_LIST[light_pulu_name]}`\n\n**Ask at @Lightning_Support_Group"
     lightning_is_best = lightning_help_strin 
-    lightning_is_best += "\n\n**In Case Any Problem @lightningsupport** ".format(light_pulu_name)    
+    lightning_is_best += "\n\n**In Case Any Problem** @Lightning_Support_Group ".format(light_pulu_name)    
     if len(lightning_is_best) >= 4096:
           keinshin = "`Wait.( ͡🔥 ͜ʖ ͡🔥)`"
           await lightning.answer(keinshin, cache_time=0, alert=True)
@@ -430,14 +403,14 @@ async def lightning_is_better(lightning):
         return
     await lightning.get_chat()
     lightning_id = lightning.query.user_id
-    text1 = f"LOL **You Think So You Can**😂😂\n\n**[Nibba](tg://user?id={lightning_id}) Bye Goin To Block You Gay**😂😂"
+    text1 = f"LOL **You Think So You Can**😂😂\n\n**[Idiot](tg://user?id={lightning_id}) Bye I'm going to block you.**😂😂"
     await lightning.edit("Off Course Go To Hell Dude")
     await bot.send_message(lightning.query.user_id, text1)
     await bot(functions.contacts.BlockRequest(lightning.query.user_id))
-    await lightning.edit("🖕")
+    await lightning.edit("😛")
     await bot.send_message(
         LIGHT_LOGS,
-        f"Hey Master Sorry Disturb You, [Noob](tg://user?id={lightning_id}) Tryin To Spam 😂\n\n**So Blocked**.",
+        f"Hey Master Sorry Disturb You, [Noob](tg://user?id={lightning_id}) Trying To Spam 😂\n\n**So Blocked**.",
     )
 
 @tgbot.on(events.callbackquery.CallbackQuery(data=re.compile(b"lol_u_think_so")))
@@ -449,7 +422,7 @@ async def lightning_is_better(lightning):
     await lightning.get_chat()
     lightning_id = lightning.query.user_id
     text1 = f"LOL You Think So You Can😂😂\nGo and wait😂😂"
-    await lightning.edit("Off Course Go To Hell Dude🖕")
+    await lightning.edit("Off Course Go To Hell Dude😛")
     await bot.send_message(lightning.query.user_id, text1)
     await bot(functions.contacts.BlockRequest(lightning.query.user_id))
     await bot.send_message(
@@ -477,7 +450,7 @@ async def lightning_is_better(lightning):
         [Button.inline("Tg Causal Friend", data="tg_okay")],
         ], 
     )
-    light_text = "`Warning`- ❗️⚠️Dont Try Anything Stupid  Wait Kindly!!!❗️⚠️"
+    light_text = "`Warning`- ❗️⚠️Don't send any message now wait kindly!!!❗️⚠️"
     await bot.send_message(lightning.query.user_id, light_text)
     
     
@@ -543,7 +516,7 @@ async def lightning_is_better(lightning):
     )
 
     
-    reqws = "`Warning`- ❗️⚠️Dont Try Anything Stupid  Wait Kindly!!!❗️⚠️"
+    reqws = "`Warning`- ❗️⚠️Don't send any message now wait kindly!!!❗️⚠️"
 
 
     await bot.send_message(lightning.query.user_id, reqws)
@@ -594,7 +567,7 @@ async def hmm(lightning):
 @tgbot.on(events.callbackquery.CallbackQuery(data=re.compile(b"krish")))
 async def hmm(lightning):
     if lightning.query.user_id == bot.uid:
-        text = ".xnxx\n.picx\n.les\n🙄🙄🙄🙄"
+        text = "Bot Alright Master if in case of any Problems reach out to support group;)"
         await lightning.answer(text, alert=True)
     else:
         txt = f"For {LIGHTNINGUSER} Not For You :)"
@@ -620,7 +593,7 @@ async def ho(event):
     # This Is Copy of Above Code. (C) @SpEcHiDe
     buttons = lightnings_menu_for_help(0, CMD_LIST, "helpme")
     ho = f"""Black Lightning Is Here With Stunning Help !\n
-In Case Any Problem @lightningsupport \nTottal Plugs( ͡🔥 ͜ʖ ͡🔥): {len(CMD_LIST)}"""
+In Case Any Problem [𝐁𝐥𝐚𝐜𝐤 𝐋𝐢𝐠𝐡𝐭𝐧𝐢𝐧𝐠](https://t.me/lightning_support_group) \nTottal Plugs( ͡🔥 ͜ʖ ͡🔥): {len(CMD_LIST)}"""
     await event.edit(message=ho, buttons=buttons)
 
 
